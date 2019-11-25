@@ -1,0 +1,31 @@
+{
+  "name": "image-processor-api",
+  "version": "2.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TannerReynolds/Image-Processor-API.git"
+  },
+  "author": "TannerReynolds",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TannerReynolds/Image-Processor-API/issues"
+  },
+  "homepage": "https://github.com/TannerReynolds/Image-Processor-API#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "canvas": "^2.3.1",
+    "canvas-constructor": "github:kyranet/canvasConstructor",
+    "eris": "^0.9.0",
+    "express": "^4.16.4",
+    "fs-nextra": "^0.3.8",
+    "gm": "^1.23.1",
+    "image-download": "^1.1.0",
+    "image-to-ascii": "^3.0.12"
+  }
+}

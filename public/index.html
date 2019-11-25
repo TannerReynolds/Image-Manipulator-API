@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="theme-color" content="#DC603A">
+<meta property="og:title" content="Image Processing API">
+<meta property="og:description" content="81 image effects right at your software's metaphorical finger tips">
+<meta property="og:image" content="https://qoilo.com/Ptg4Jf">
+<link rel="stylesheet" href="atom-one-dark.css">
+<link rel="stylesheet" href="paste.css">
+<script src="highlight.pack.js"></script>
+<script src="highlightjs-line-numbers.min.js"></script>
+</head>
+<body>
+<pre><code id="code">let imgenRequestUrl = `https://api.qoilo.com/imgen?effect=${effectYouWantToUse}&amp;url=${imageUrlInput}`;
+let imgenReturns = Buffer;
+let example = &#34;https://api.qoilo.com/imgen?effect=painting&amp;url=https://qoilo.com/78fxFb&#34;;
+    let effects = [
+        &#34;ajit&#34;,
+        &#34;alberto&#34;,
+        &#34;bangs&#34;,
+        &#34;beard&#34;,
+        &#34;bernie&#34;,
+        &#34;book&#34;,
+        &#34;cancer&#34;,
+        &#34;computer&#34;,
+        &#34;computer2&#34;,
+        &#34;drakeandjosh&#34;,
+        &#34;f&#34;,
+        &#34;fantano&#34;,
+        &#34;ff&#34;,
+        &#34;fighting&#34;,
+        &#34;flashback&#34;,
+        &#34;frame&#34;,
+        &#34;frame2&#34;,
+        &#34;gaben&#34;,
+        &#34;gas&#34;,
+        &#34;gay&#34;,
+        &#34;gimp&#34;,
+        &#34;hagrid&#34;,
+        &#34;happydog&#34;,
+        &#34;hero&#34;,
+        &#34;hitler&#34;,
+        &#34;homie&#34;,
+        &#34;icarly&#34;,
+        &#34;illegalalien&#34;,
+        &#34;implode&#34;,
+        &#34;invert&#34;,
+        &#34;jack&#34;,
+        &#34;jojo&#34;,
+        &#34;jojo2&#34;,
+        &#34;kanye&#34;,
+        &#34;linus&#34;,
+        &#34;logan&#34;,
+        &#34;look&#34;,
+        &#34;mario&#34;,
+        &#34;megawrong&#34;,
+        &#34;mozart&#34;,
+        &#34;nickleback&#34;,
+        &#34;odyssey&#34;,
+        &#34;paint&#34;,
+        &#34;paint2&#34;,
+        &#34;paint3&#34;,
+        &#34;painting&#34;,
+        &#34;patrick&#34;,
+        &#34;perry&#34;,
+        &#34;phone&#34;,
+        &#34;plane&#34;,
+        &#34;powerpoint&#34;,
+        &#34;printer&#34;,
+        &#34;proof&#34;,
+        &#34;quality&#34;,
+        &#34;reggie&#34;,
+        &#34;religion&#34;,
+        &#34;revolting&#34;,
+        &#34;saxton&#34;,
+        &#34;science&#34;,
+        &#34;sex&#34;,
+        &#34;shit&#34;,
+        &#34;sign&#34;,
+        &#34;sign2&#34;,
+        &#34;sign3&#34;,
+        &#34;smartwatch&#34;,
+        &#34;sniper&#34;,
+        &#34;squidward&#34;,
+        &#34;starman&#34;,
+        &#34;switch&#34;,
+        &#34;thinking&#34;,
+        &#34;toys&#34;,
+        &#34;tv&#34;,
+        &#34;tv2&#34;,
+        &#34;upnext&#34;,
+        &#34;view&#34;,
+        &#34;vr&#34;,
+        &#34;who&#34;,
+        &#34;wrong&#34;,
+        &#34;wrongpic&#34;,
+        &#34;zuck&#34;
+    ];
+
+let printerRequestUrl = `https://api.qoilo.com/printer?url=${imageUrlInput}`;
+let printerReturns = Text;
+let example = &#34;https://api.qoilo.com/printer?url=https://qoilo.com/aIFNHn&#34;;  
+
+
+let comingSoon = [
+  `/textmeme?url=${imageUrlInput}&amp;text1=${firstText}&amp;text2=${secondText}&amp;...`, // Image Gen with text
+  `/bigprinter?${imageUrlInput}`, // 128x128 version of /printer
+  `/quote?avatar=${discordAvatarUrl}&amp;said=${whatTheySay}&amp;name=${userName}&amp;color=${roleColor}`
+];
+
+setTimeout(() =&gt; completeFeatures(comingSoon), Infinity);
+
+let discord = &#34;https://discord.gg/C9reUPF&#34;;</code></pre>
+<script>hljs.initHighlightingOnLoad()</script>
+<script>hljs.initLineNumbersOnLoad();</script>
+</body>
+</html>
