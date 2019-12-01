@@ -1,6 +1,6 @@
 /* eslint-disable global-require */
 /* eslint-disable no-console */
-const ImageProcessor = require(`${__dirname}/server/app`);
+const ImageProcessor = require(`${__dirname}/server/server`);
 /** Setting definitions for the config file and server class */
 let c;
 let server;
@@ -25,5 +25,17 @@ process.on('SIGINT', async () => {
     process.exit();
 });
 
-process.on('unhandledRejection', async err => server.log.uncaughtError(err.stack));
-process.on('uncaughtException', async err => server.log.uncaughtError(err.stack));
+process.on('unhandledRejection', async err => {
+    if(!server) {
+        console.log(err.stack)
+    } else {
+        server.log.uncaughtError(err.stack)
+    }
+});
+process.on('uncaughtException', async err => {
+    if(!server) {
+        console.log(err.stack)
+    } else {
+        server.log.uncaughtError(err.stack)
+    }
+});

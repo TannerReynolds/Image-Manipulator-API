@@ -4,9 +4,9 @@ const imageDownload = require('image-download');
 module.exports = {
     endpoint:"vr",
     example: "Example for <a href=\"https://cdn.discordapp.com/attachments/413822583914496022/427967188792639509/render.jpg\">vr</a>",
-    process:async (req, res, param, endpoint) => {
-        let vr = await fsn.readFile('./img/vr.png');
-        imageDownload(param).then(incomingBuffer => {
+    process:async (req, res, params, endpoint) => {
+        let vr = await fsn.readFile(`${__dirname}/../assets/img/vr.png`);
+        imageDownload(params.url).then(incomingBuffer => {
           let image = new Canvas(604, 711)
           .setColor('#FFFFFF')
           .addRect(0, 0, 604, 711)

@@ -4,9 +4,9 @@ const imageDownload = require('image-download');
 module.exports = {
     endpoint:"ajit",
     example: "Example for <a href=\"http://thiccbit.ch/hnb137\">ajit</a>",
-    process:async (req, res, param, endpoint) => {
-        let ajit = await fsn.readFile('./img/ajit.png');
-        imageDownload(param).then(incomingBuffer => {
+    process:async (req, res, params, endpoint) => {
+        let ajit = await fsn.readFile(`${__dirname}/../assets/img/ajit.png`);
+        imageDownload(params.url).then(incomingBuffer => {
           let image = new Canvas(732, 568)
           .setColor('#FFFFFF')
           .addRect(0, 0, 732, 568)

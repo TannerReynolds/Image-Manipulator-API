@@ -4,10 +4,10 @@ const imageDownload = require('image-download');
 module.exports = {
     endpoint:"gimp",
     example: "Example for <a href=\"https://cdn.discordapp.com/attachments/413822583914496022/427943016125431808/render.jpg\">gimp</a>",
-    process:async (req, res, param, endpoint) => {
-        let gimp = await fsn.readFile('./img/gimp1.png');
-        let gimp2 = await fsn.readFile('./img/gimp2.png');
-        imageDownload(param).then(incomingBuffer => {
+    process:async (req, res, params, endpoint) => {
+        let gimp = await fsn.readFile(`${__dirname}/../assets/img/gimp1.png`);
+        let gimp2 = await fsn.readFile(`${__dirname}/../assets/img/gimp2.png`);
+        imageDownload(params.url).then(incomingBuffer => {
           let image = new Canvas(650, 531)
           .setColor('#FFFFFF')
           .addImage(gimp, 0, 0, 650, 531)

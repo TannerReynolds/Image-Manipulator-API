@@ -4,9 +4,9 @@ const imageDownload = require('image-download');
 module.exports = {
     endpoint:"painting",
     example: "Example for <a href=\"https://cdn.discordapp.com/attachments/413822583914496022/427952114476515339/render.jpg\">painting</a>",
-    process:async (req, res, param, endpoint) => {
-        let painting = await fsn.readFile('./img/painting.png');
-        imageDownload(param).then(incomingBuffer => {
+    process:async (req, res, params, endpoint) => {
+        let painting = await fsn.readFile(`${__dirname}/../assets/img/painting.png`);
+        imageDownload(params.url).then(incomingBuffer => {
           let image = new Canvas(800, 396)
           .setColor('#FFFFFF')
           .addRect(0, 0, 800, 396)

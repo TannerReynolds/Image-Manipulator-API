@@ -4,9 +4,9 @@ const imageDownload = require('image-download');
 module.exports = {
     endpoint:"nickleback",
     example: "Example for <a href=\"http://thiccbit.ch/hnb137\">nickleback</a>",
-    process:async (req, res, param, endpoint) => {
-        let nickleback = await fsn.readFile('./img/nickleback.png');
-        imageDownload(param).then(incomingBuffer => {
+    process:async (req, res, params, endpoint) => {
+        let nickleback = await fsn.readFile(`${__dirname}/../assets/img/nickleback.png`);
+        imageDownload(params.url).then(incomingBuffer => {
           let image = new Canvas(960, 540)
           .setColor('#FFFFFF')
           .addRect(0, 0, 960, 540)

@@ -4,9 +4,9 @@ const imageDownload = require('image-download');
 module.exports = {
     endpoint:"hero",
     example: "N/a",
-    process:async (req, res, param, endpoint) => {
-        let hero = await fsn.readFile('./img/hero.png');
-        imageDownload(param).then(incomingBuffer => {
+    process:async (req, res, params, endpoint) => {
+        let hero = await fsn.readFile(`${__dirname}/../assets/img/hero.png`);
+        imageDownload(params.url).then(incomingBuffer => {
           let image = new Canvas(720, 576)
           .setColor('#FFFFFF')
           .addRect(347, 301, 373, 275)

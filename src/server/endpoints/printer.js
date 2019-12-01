@@ -5,7 +5,7 @@ module.exports = {
     endpoint:"printer",
     example: "Example for <a href=\"https://cdn.discordapp.com/attachments/413822583914496022/427953452585451520/render.jpg\">plane</a>",
     process:async (req, res, param) => {
-        imageDownload(param).then(incomingBuffer => {
+        imageDownload(params.url).then(incomingBuffer => {
             let dimensions = sizeOf(incomingBuffer)
             let dimX = dimensions.width
             let dimY = dimensions.height

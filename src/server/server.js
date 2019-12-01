@@ -19,7 +19,7 @@ const db = low(adapter);
 const helmet = require('helmet');
 
 /** Express Webserver Class */
-class ShareXAPI {
+class ImageProcessor {
     /**
    * Starting server and bot, handling routing, and middleware
    * @param {object} c - configuration json file
@@ -36,13 +36,13 @@ class ShareXAPI {
         this.utils = utils;
         this.log = utils.log;
         this.auth = utils.auth;
+        this.endpoints = [];
+        this.loadEndpoints();
         this.c = c;
         this.c.discordToken && this.c.discordToken !== undefined && this.c.discrdToken !== null
             ? this.runDiscordBot()
             : this.log.verbose('No Discord Token provided...\nContinuing without Discord connection...');
         this.app = app;
-        this.app.set('view engine', 'ejs');
-        this.app.set('views', path.join(__dirname, '/views'));
         this.app.use(helmet());
         this.app.use(bodyParser.text());
         this.app.use(bodyParser.json());
@@ -50,28 +50,6 @@ class ShareXAPI {
             extended: true,
         }));
 
-        /* Don't allow access if not accessed with configured domain */
-        this.app.use((req, res, next) => {
-            if(this.c.domain === '*') {
-                next();
-            } else if(req.headers.host !== this.c.domain.toLowerCase() && !this.c.domain.includes('*')) {
-                res.statusCode = 401;
-                res.write('Error 401: Unauthorized Domain');
-                return res.end();
-            } else if(this.c.domain.includes('*')) {
-                let reqParts = req.headers.host.toLowerCase().split('.');
-                let domainParts = this.c.domain.toLowerCase().split('.')
-                if(reqParts[1] === domainParts[1] && reqParts[2] === domainParts[2]) {
-                    next();
-                } else {
-                    res.statusCode = 401;
-                    res.write('Error 401: Unauthorized Domain');
-                    return res.end();
-                }
-            } else {
-                next();
-            }
-        });
 
         /** Checking to see if IP is banned */
         this.app.use((req, res, next) => {
@@ -81,7 +59,7 @@ class ShareXAPI {
                 next();
             } else {
                 res.statusCode = 401;
-                res.render('unauthorized');
+                res.write('This IP has been banned from the API');
                 return res.end();
             }
         });
@@ -105,29 +83,34 @@ class ShareXAPI {
         });
 
         // All files in /uploads/ are publicly accessible via http
-        this.app.use(express.static(`${__dirname}/uploads/`, {
-            extensions: this.c.admin.allowed,
+        this.app.use(express.static(`${__dirname}/public/`, {
+            extensions: ["css", "html", "js"],
         }));
 
-        this.app.get("/", public.home.bind(this));
+        this.app.get("/", () => {
+            res.setHeader("Content-Type", "text/html");
+            res.write(fs.readFileSync(`${__dirname}/public/index.html`));
+            res.end();
+        });
 
         this.app.get("/*", async (req, res) => {
-          // Example: http://api.qoilo.com/imgen?effect=ajit&url=http://qoilo.com/yf0pjk
           let params = req.query
-          let path = req.path().split('/')[1]
-          if(!this.endpoints.includes(path)) {
-            res.statusCode = 404;
-            res.write("Error 404: Endpoint Not Found");
-            return res.end();
-          }
-            for(i = 0; i < this.endpoints; i++) {
+          let path = req.path.split('/')[1]
+          if(path.includes('?')) path = path.split('?')[0]
+          console.log(path)
+            for(let i = 0; i < this.endpoints.length; i++) {
               if(this.endpoints[i].endpoint === path) {
                 res.statusCode = 200
                 await this.endpoints[i].process(req, res, params, path)
+              } else if(i === this.endpoints.length - 1) {
+                  res.statusCode = 404  
+                  res.write('Error 404: Endpoint not found.')
+                  return res.end();
               }
             }
         })
         
+        this.startServer();
     }
 
     /** Booting up the Discord Bot
@@ -158,6 +141,18 @@ class ShareXAPI {
                     // eslint-disable-next-line global-require
                     this.commands.push(require(`${__dirname}/../bot/commands/${file.toString()}`));
                     this.log.verbose(`Loaded Command: ${file.toString()}`);
+                }
+            });
+        });
+    }
+
+    async loadEndpoints() {
+        fs.readdir(`${__dirname}/endpoints`, (err, files) => {
+            files.forEach(file => {
+                if (file.toString().includes('.js')) {
+                    // eslint-disable-next-line global-require
+                    this.endpoints.push(require(`${__dirname}/endpoints/${file.toString()}`));
+                    this.log.verbose(`Loaded Endpoint: ${file.toString()}`);
                 }
             });
         });
@@ -198,4 +193,4 @@ class ShareXAPI {
     }
 }
 
-module.exports = ShareXAPI;
+module.exports = ImageProcessor;
