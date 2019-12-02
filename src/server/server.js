@@ -37,6 +37,7 @@ class ImageProcessor {
         this.log = utils.log;
         this.auth = utils.auth;
         this.endpoints = [];
+        this.eps = [];
         this.loadEndpoints();
         this.c = c;
         this.c.discordToken && this.c.discordToken !== undefined && this.c.discrdToken !== null
@@ -97,15 +98,15 @@ class ImageProcessor {
           let params = req.query
           let path = req.path.split('/')[1]
           if(path.includes('?')) path = path.split('?')[0]
-          console.log(path)
+          if(!this.eps.includes(path)) {
+              res.statusCode = 404;
+              res.write('Error 404: Endpoint Not Found');
+              return res.end();
+          }
             for(let i = 0; i < this.endpoints.length; i++) {
               if(this.endpoints[i].endpoint === path) {
                 res.statusCode = 200
                 await this.endpoints[i].process(req, res, params, path)
-              } else if(i === this.endpoints.length - 1) {
-                  res.statusCode = 404  
-                  res.write('Error 404: Endpoint not found.')
-                  return res.end();
               }
             }
         })
@@ -152,6 +153,7 @@ class ImageProcessor {
                 if (file.toString().includes('.js')) {
                     // eslint-disable-next-line global-require
                     this.endpoints.push(require(`${__dirname}/endpoints/${file.toString()}`));
+                    this.eps.push(file.toString().split('.')[0])
                     this.log.verbose(`Loaded Endpoint: ${file.toString()}`);
                 }
             });
